@@ -6,6 +6,7 @@ path='D:/BOSTON RD/TRANSPORTATION/MAP/UBER/'
 
 osm=gpd.read_file(path+'osm.geojson')
 osm.crs={'init':'epsg:4326'}
+osm.columns=['highway','oneway','wayid','startnode','endnode','name','geometry']
 
 osmseg=pd.read_csv(path+'movement-segments-to-osm-ways-new-york-2018.csv',dtype=str,converters={'osm_way_id':float})
 osmseg['segment_id']=[' '.join(x.split()) for x in osmseg['segment_id']]
