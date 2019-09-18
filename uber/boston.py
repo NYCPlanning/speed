@@ -1,5 +1,6 @@
-import pandas as pd
 import geopandas as gpd
+import pandas as pd
+import numpy as np
 
 path='D:/BOSTON RD/TRANSPORTATION/MAP/UBER/'
 
@@ -67,6 +68,9 @@ uber=pd.merge(osm,q1,how='left',on=['osmwayid','osmstartnode','osmendnode'])
 uber=pd.merge(uber,q2,how='left',on=['osmwayid','osmstartnode','osmendnode'])
 uber=pd.merge(uber,q3,how='left',on=['osmwayid','osmstartnode','osmendnode'])
 uber=pd.merge(uber,q4,how='left',on=['osmwayid','osmstartnode','osmendnode'])
-uber['speedmean2018']=mean(uber['speedmean2018'])
-
+uber['speedmean2018']=np.nanmean(uber[['speedmeanq1','speedmeanq2','speedmeanq3','speedmeanq4']],axis=1)
+uber['speedmedian2018']=np.nanmedian(uber[['speedmedianq1','speedmedianq2','speedmedianq3','speedmedianq4']],axis=1)
+uber=uber[['osmwayid','osmstartnode','osmendnode','osmname','osmhighway','osmoneway','speedmeanq1','speedmeanq2','speedmeanq3',
+           'speedmeanq4','speedmean2018','speedmedianq1','speedmedianq2','speedmedianq3','speedmedianq4','speedmedian2018','geometry']]
+uber.to_file(path+'boston.shp')
 
