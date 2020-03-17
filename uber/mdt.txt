@@ -4,7 +4,9 @@ install node.js and npm:
 sudo curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -
 sudo apt-get install -y nodejs
 
+sudo npm install -g movement-data-toolkit
+
 mdt clear-cache
 
-sudo mdt create-geometry-file new_york 2018 > UBER/osm.geojson
-sudo mdt speeds-to-geojson new_york 2018-10-01 2018-10-31 > UBER/speed.geojson
+sudo mdt create-geometry-file new_york 2019 > UBER/osm.geojson
+sudo mdt speeds-to-geojson new_york 2019-01-01 2019-12-31 > UBER/speed.geojson
