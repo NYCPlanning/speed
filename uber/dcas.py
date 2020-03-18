@@ -2,7 +2,7 @@ import geopandas as gpd
 import pandas as pd
 import numpy as np
 
-#path='C:/Users/Yijun Ma/Desktop/D/DOCUMENT/DCP2020/DCAS/'
+path='C:/Users/Yijun Ma/Desktop/D/DOCUMENT/DCP2020/DCAS/'
 path='/home/mayijun/DCAS/'
 
 osm=gpd.read_file(path+'UBER/osm.geojson')
@@ -15,29 +15,38 @@ osm=osm.to_crs({'init':'epsg:4326'})
 ct=gpd.read_file(path+'SHP/nycct.shp')
 ct.crs={'init':'epsg:4326'}
 ct.columns=['tract','geometry']
+osm=gpd.sjoin(osm,ct,how='inner',op='intersects')
+osm=osm[['wayid','startnode','endnode','highway','length','tract','geometry']].reset_index(drop=True)
+osm.to_file(path+'SHP/osm.shp')
+print('tract')
+
+osm=gpd.read_file(path+'SHP/osm.shp')
 nta=gpd.read_file(path+'SHP/nta.shp')
 nta.crs={'init':'epsg:4326'}
 nta=nta[['NTACode','geometry']].reset_index(drop=True)
 nta.columns=['nta','geometry']
+osm=gpd.sjoin(osm,nta,how='inner',op='intersects')
+osm=osm[['wayid','startnode','endnode','highway','length','tract','nta','geometry']].reset_index(drop=True)
+osm.to_file(path+'SHP/osm.shp')
+print('nta')
+
+osm=gpd.read_file(path+'SHP/osm.shp')
 community=gpd.read_file(path+'SHP/community.shp')
 community.crs={'init':'epsg:4326'}
 community.columns=['community','geometry']
+osm=gpd.sjoin(osm,community,how='inner',op='intersects')
+osm=osm[['wayid','startnode','endnode','highway','length','tract','nta','community','geometry']].reset_index(drop=True)
+osm.to_file(path+'SHP/osm.shp')
+print('community')
+
+osm=gpd.read_file(path+'SHP/osm.shp')
 council=gpd.read_file(path+'SHP/council.shp')
 council.crs={'init':'epsg:4326'}
 council.columns=['council','geometry']
-#osm=gpd.sjoin(osm,ct,how='inner',op='intersects')
-#osm=osm[['wayid','startnode','endnode','highway','length','tract','geometry']].reset_index(drop=True)
-#print('tract')
-osm=gpd.sjoin(osm,nta,how='inner',op='intersects')
-osm=osm[['wayid','startnode','endnode','highway','length','tract','nta','geometry']].reset_index(drop=True)
-print('nta')
-osm=gpd.sjoin(osm,community,how='inner',op='intersects')
-osm=osm[['wayid','startnode','endnode','highway','length','tract','nta','community','geometry']].reset_index(drop=True)
-print('community')
 osm=gpd.sjoin(osm,council,how='inner',op='intersects')
 osm=osm[['wayid','startnode','endnode','highway','length','tract','nta','community','council','geometry']].reset_index(drop=True)
-print('council')
 osm.to_file(path+'SHP/osm.shp')
+print('council')
 
 #q1=pd.read_csv(path+'UBER/movement-speeds-quarterly-by-hod-new-york-2019-Q1.csv',dtype=float,converters={'segment_id':str,
 #                                                                                                         'start_junction_id':str,
