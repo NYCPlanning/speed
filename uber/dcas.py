@@ -37,36 +37,41 @@ osm.to_file(path+'SHP/osm.shp')
 
 
 
-#
-#q1=pd.read_csv(path+'movement-speeds-quarterly-by-hod-new-york-2019-Q1.csv',dtype=float,converters={'segment_id':str,
-#                                                                                                    'start_junction_id':str,
-#                                                                                                    'end_junction_id':str})
-#q1=q1[['osm_way_id','osm_start_node_id','osm_end_node_id','hour_of_day','speed_mph_mean']].reset_index(drop=True)
-#q1.columns=['wayid','startnode','endnode','hod','meanq1']
-#q2=pd.read_csv(path+'movement-speeds-quarterly-by-hod-new-york-2019-Q2.csv',dtype=float,converters={'segment_id':str,
-#                                                                                                    'start_junction_id':str,
-#                                                                                                    'end_junction_id':str})
-#q2=q2[['osm_way_id','osm_start_node_id','osm_end_node_id','hour_of_day','speed_mph_mean']].reset_index(drop=True)
-#q2.columns=['wayid','startnode','endnode','hod','meanq2']
-#q3=pd.read_csv(path+'movement-speeds-quarterly-by-hod-new-york-2019-Q3.csv',dtype=float,converters={'segment_id':str,
-#                                                                                                    'start_junction_id':str,
-#                                                                                                    'end_junction_id':str})
-#q3=q3[['osm_way_id','osm_start_node_id','osm_end_node_id','hour_of_day','speed_mph_mean']].reset_index(drop=True)
-#q3.columns=['wayid','startnode','endnode','hod','meanq3']
-#q4=pd.read_csv(path+'movement-speeds-quarterly-by-hod-new-york-2019-Q4.csv',dtype=float,converters={'segment_id':str,
-#                                                                                                    'start_junction_id':str,
-#                                                                                                    'end_junction_id':str})
-#q4=q4[['osm_way_id','osm_start_node_id','osm_end_node_id','hour_of_day','speed_mph_mean']].reset_index(drop=True)
-#q4.columns=['wayid','startnode','endnode','hod','meanq4']
-#dcas=pd.merge(q1,q2,how='inner',on=['wayid','startnode','endnode','hod'])
-#dcas=pd.merge(dcas,q3,how='inner',on=['wayid','startnode','endnode','hod'])
-#dcas=pd.merge(dcas,q4,how='inner',on=['wayid','startnode','endnode','hod'])
-#dcas['avgspeed']=np.nanmean(dcas[['meanq1','meanq2','meanq3','meanq4']],axis=1)
+
+#q1=pd.read_csv(path+'UBER/movement-speeds-quarterly-by-hod-new-york-2019-Q1.csv',dtype=float,converters={'segment_id':str,
+#                                                                                                         'start_junction_id':str,
+#                                                                                                         'end_junction_id':str})
+#q1=q1[['osm_way_id','osm_start_node_id','osm_end_node_id','hour_of_day','speed_mph_mean','speed_mph_stddev','speed_mph_p50','speed_mph_p85']].reset_index(drop=True)
+#q1.columns=['wayid','startnode','endnode','hod','meanq1','stddevq1','p50q1','p85q1']
+#q2=pd.read_csv(path+'UBER/movement-speeds-quarterly-by-hod-new-york-2019-Q2.csv',dtype=float,converters={'segment_id':str,
+#                                                                                                         'start_junction_id':str,
+#                                                                                                         'end_junction_id':str})
+#q2=q2[['osm_way_id','osm_start_node_id','osm_end_node_id','hour_of_day','speed_mph_mean','speed_mph_stddev','speed_mph_p50','speed_mph_p85']].reset_index(drop=True)
+#q2.columns=['wayid','startnode','endnode','hod','meanq2','stddevq2','p50q2','p85q2']
+#q3=pd.read_csv(path+'UBER/movement-speeds-quarterly-by-hod-new-york-2019-Q3.csv',dtype=float,converters={'segment_id':str,
+#                                                                                                         'start_junction_id':str,
+#                                                                                                         'end_junction_id':str})
+#q3=q3[['osm_way_id','osm_start_node_id','osm_end_node_id','hour_of_day','speed_mph_mean','speed_mph_stddev','speed_mph_p50','speed_mph_p85']].reset_index(drop=True)
+#q3.columns=['wayid','startnode','endnode','hod','meanq3','stddevq3','p50q3','p85q3']
+#q4=pd.read_csv(path+'UBER/movement-speeds-quarterly-by-hod-new-york-2019-Q4.csv',dtype=float,converters={'segment_id':str,
+#                                                                                                         'start_junction_id':str,
+#                                                                                                         'end_junction_id':str})
+#q4=q4[['osm_way_id','osm_start_node_id','osm_end_node_id','hour_of_day','speed_mph_mean','speed_mph_stddev','speed_mph_p50','speed_mph_p85']].reset_index(drop=True)
+#q4.columns=['wayid','startnode','endnode','hod','meanq4','stddevq4','p50q4','p85q4']
+#dcasosm=pd.merge(q1,q2,how='inner',on=['wayid','startnode','endnode','hod'])
+#dcasosm=pd.merge(dcasosm,q3,how='inner',on=['wayid','startnode','endnode','hod'])
+#dcasosm=pd.merge(dcasosm,q4,how='inner',on=['wayid','startnode','endnode','hod'])
+#dcasosm['avgspeed']=np.nanmean(dcasosm[['meanq1','meanq2','meanq3','meanq4']],axis=1)
 #osm=gpd.read_file(path+'osm.shp')
 #osm.crs={'init':'epsg:4326'}
 #dcas=pd.merge(osm,dcas,how='inner',on=['wayid','startnode','endnode'])
 #dcas=dcas[(dcas['highway']!='motorway')&(dcas['highway']!='motorway_link')].reset_index(drop=True)
 #dcas=dcas[dcas['hod']==8].reset_index(drop=True)
+
+
+
+
+
 #dcas['avgspeedlength']=dcas['avgspeed']*dcas['length']
 #dcas=dcas.groupby('tractid',as_index=False).agg({'avgspeedlength':'sum','length':'sum'})
 #dcas['avgspeed']=dcas['avgspeedlength']/dcas['length']
