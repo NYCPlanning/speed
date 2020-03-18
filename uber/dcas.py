@@ -12,12 +12,14 @@ osm=osm[['osmwayid','osmstartnodeid','osmendnodeid','osmname','osmhighway','geom
 osm.columns=['wayid','startnode','endnode','name','highway','geometry']
 osm['length']=[x.length for x in osm['geometry']]
 osm=osm.to_crs({'init':'epsg:4326'})
-bk=gpd.read_file(path+'quadstatebk.shp')
-bk.crs={'init':'epsg:4326'}
-bk=bk[['blockid','geometry']].reset_index(drop=True)
-osm=gpd.sjoin(osm,bk,how='inner',op='intersects')
-osm=osm[['wayid','startnode','endnode','name','highway','length','blockid','geometry']].reset_index(drop=True)
+#bk=gpd.read_file(path+'quadstatebk.shp')
+#bk.crs={'init':'epsg:4326'}
+#bk=bk[['blockid','geometry']].reset_index(drop=True)
+#osm=gpd.sjoin(osm,bk,how='inner',op='intersects')
+#osm=osm[['wayid','startnode','endnode','name','highway','length','blockid','geometry']].reset_index(drop=True)
 osm.to_file(path+'osm.shp')
+
+
 
 #q1=pd.read_csv(path+'movement-speeds-quarterly-by-hod-new-york-2019-Q1.csv',dtype=float,converters={'segment_id':str,
 #                                                                                                    'start_junction_id':str,
