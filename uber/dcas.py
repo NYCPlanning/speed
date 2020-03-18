@@ -2,7 +2,8 @@ import geopandas as gpd
 import pandas as pd
 import numpy as np
 
-path='C:/Users/Yijun Ma/Desktop/D/DOCUMENT/DCP2020/DCAS/'
+#path='C:/Users/Yijun Ma/Desktop/D/DOCUMENT/DCP2020/DCAS/'
+path='/home/mayijun/DCAS/'
 
 osm=gpd.read_file(path+'osm.geojson')
 osm.crs={'init':'epsg:4326'}
@@ -10,6 +11,11 @@ osm=osm.to_crs({'init':'epsg:6539'})
 osm=osm[['osmwayid','osmstartnodeid','osmendnodeid','osmname','osmhighway','geometry']].reset_index(drop=True)
 osm['length']=[x.length for x in osm['geometry']]
 osm=osm.to_crs({'init':'epsg:4326'})
+bk=gpd.read_file(path+'quadstatebk.shp')
+bk.crs={'init':'epsg:4326'}
+bk=bk[['blockid','geometry']].reset_index(drop=True)
+osm=gpd.sjoin(osm,bk,how='inner',op='intersects')
+osm=osm[['osmwayid','osmstartnodeid','osmendnodeid','osmname','osmhighway','length','blockid','geometry']].reset_index(drop=True)
 osm.to_file(path+'osm.shp')
 
 #q1=pd.read_csv(path+'movement-speeds-quarterly-by-hod-new-york-2019-Q1.csv',dtype=float,converters={'segment_id':str,
@@ -38,7 +44,11 @@ osm.to_file(path+'osm.shp')
 #
 #dcas.to_file(path+'dcas.shp')
 
-ct=gpd.read_file(path+'quadstatect.shp')
-ct.crs={'init':'epsg:4326'}
-ct=ct[['tractid','geometry']].reset_index(drop=True)
-osm=gpd.sjoin(osm,ct,how='inner',op='intersects')
+
+
+#osm=gpd.read_file(path+'osm.shp')
+#
+#ct=gpd.read_file(path+'quadstatect.shp')
+#ct.crs={'init':'epsg:4326'}
+#ct=ct[['tractid','geometry']].reset_index(drop=True)
+#osm=gpd.sjoin(osm,ct,how='inner',op='intersects')
