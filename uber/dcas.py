@@ -25,9 +25,9 @@ community.columns=['community','geometry']
 council=gpd.read_file(path+'SHP/council.shp')
 council.crs={'init':'epsg:4326'}
 council.columns=['council','geometry']
-osm=gpd.sjoin(osm,ct,how='inner',op='intersects')
-osm=osm[['wayid','startnode','endnode','highway','length','tract','geometry']].reset_index(drop=True)
-print('tract')
+#osm=gpd.sjoin(osm,ct,how='inner',op='intersects')
+#osm=osm[['wayid','startnode','endnode','highway','length','tract','geometry']].reset_index(drop=True)
+#print('tract')
 osm=gpd.sjoin(osm,nta,how='inner',op='intersects')
 osm=osm[['wayid','startnode','endnode','highway','length','tract','nta','geometry']].reset_index(drop=True)
 print('nta')
