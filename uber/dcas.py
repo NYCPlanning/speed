@@ -15,7 +15,7 @@ bk=gpd.read_file(path+'quadstatebk.shp')
 bk.crs={'init':'epsg:4326'}
 bk=bk[['blockid','geometry']].reset_index(drop=True)
 osm=gpd.sjoin(osm,bk,how='inner',op='intersects')
-osm=osm[['osmwayid','osmstartnodeid','osmendnodeid','osmname','osmhighway','length','blockid','geometry']].reset_index(drop=True)
+osm=osm[['wayid','startnode','endnode','name','highway','length','blockid','geometry']].reset_index(drop=True)
 osm.to_file(path+'osm.shp')
 
 #q1=pd.read_csv(path+'movement-speeds-quarterly-by-hod-new-york-2019-Q1.csv',dtype=float,converters={'segment_id':str,
@@ -44,9 +44,11 @@ osm.to_file(path+'osm.shp')
 #dcas=pd.merge(q1,q2,how='inner',on=['osmwayid','osmstartnodeid','osmendnodeid','hod'])
 #dcas=pd.merge(dcas,q3,how='inner',on=['osmwayid','osmstartnodeid','osmendnodeid','hod'])
 #dcas=pd.merge(dcas,q4,how='inner',on=['osmwayid','osmstartnodeid','osmendnodeid','hod'])
-#dcas['meanspeed']=np.nanmean(dcas[['meanq1','meanq2','meanq3','meanq4']],axis=1)
-#
+#dcas['avgspeed']=np.nanmean(dcas[['meanq1','meanq2','meanq3','meanq4']],axis=1)
 #osm=gpd.read_file(path+'osm.shp')
+#dcas=pd.merge(osm,dcas,how='inner',on=['osmwayid','osmstartnodeid','osmendnodeid'])
+#
+#
 #nycbk=gpd.read_file(path+'quadstatebkclipped.shp')
 #nycbk=gpd.read_file(path+'quadstatebkclipped.shp')
 #nycbk=nycbk[[str(x)[0:5] in ['36005','36047','36061','36081','36085'] for x in nycbk['blockid']]]
