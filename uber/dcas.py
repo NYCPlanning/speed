@@ -5,22 +5,20 @@ import numpy as np
 #path='C:/Users/Yijun Ma/Desktop/D/DOCUMENT/DCP2020/DCAS/'
 path='/home/mayijun/DCAS/'
 
-osm=gpd.read_file(path+'osm.geojson')
-osm.crs={'init':'epsg:4326'}
-osm=osm.to_crs({'init':'epsg:6539'})
-osm=osm[['osmwayid','osmstartnodeid','osmendnodeid','osmhighway','geometry']].reset_index(drop=True)
-osm.columns=['wayid','startnode','endnode','highway','geometry']
-osm['length']=[x.length for x in osm['geometry']]
-osm=osm.to_crs({'init':'epsg:4326'})
-bk=gpd.read_file(path+'quadstatebk.shp')
-bk.crs={'init':'epsg:4326'}
-bk=bk[['blockid','geometry']].reset_index(drop=True)
-osm=gpd.sjoin(osm,bk,how='inner',op='intersects')
-osm=osm[['wayid','startnode','endnode','highway','length','blockid','geometry']].reset_index(drop=True)
-osm.to_file(path+'osm.shp')
-
-
-
+#osm=gpd.read_file(path+'osm.geojson')
+#osm.crs={'init':'epsg:4326'}
+#osm=osm.to_crs({'init':'epsg:6539'})
+#osm=osm[['osmwayid','osmstartnodeid','osmendnodeid','osmhighway','geometry']].reset_index(drop=True)
+#osm.columns=['wayid','startnode','endnode','highway','geometry']
+#osm['length']=[x.length for x in osm['geometry']]
+#osm=osm.to_crs({'init':'epsg:4326'})
+#bk=gpd.read_file(path+'quadstatebk.shp')
+#bk.crs={'init':'epsg:4326'}
+#bk=bk[['blockid','geometry']].reset_index(drop=True)
+#osm=gpd.sjoin(osm,bk,how='inner',op='intersects')
+#osm=osm[['wayid','startnode','endnode','highway','length','blockid','geometry']].reset_index(drop=True)
+#osm.to_file(path+'osm.shp')
+#
 #q1=pd.read_csv(path+'movement-speeds-quarterly-by-hod-new-york-2019-Q1.csv',dtype=float,converters={'segment_id':str,
 #                                                                                                    'start_junction_id':str,
 #                                                                                                    'end_junction_id':str})
@@ -51,10 +49,13 @@ osm.to_file(path+'osm.shp')
 #osm=gpd.read_file(path+'osm.shp')
 #dcas=pd.merge(osm,dcas,how='inner',on=['wayid','startnode','endnode'])
 #dcas=
+
+nycbk=gpd.read_file(path+'quadstatebkclipped.shp')
+nycbk=nycbk[[str(x)[0:5] in ['36005','36047','36061','36081','36085'] for x in nycbk['blockid']]]
+nycbk.to_file(path+'nycbk.shp')
+
 #
-#nycbk=gpd.read_file(path+'quadstatebkclipped.shp')
-#nycbk=gpd.read_file(path+'quadstatebkclipped.shp')
-#nycbk=nycbk[[str(x)[0:5] in ['36005','36047','36061','36081','36085'] for x in nycbk['blockid']]]
+#
 #
 #dcas=pd.merge(osm,dcas,how='inner',on=['osmwayid','osmstartnodeid','osmendnodeid'])
 #dcas=dcas[dcas['hod']==8].reset_index(drop=True)
