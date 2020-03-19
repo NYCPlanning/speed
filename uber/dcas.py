@@ -2,7 +2,7 @@ import geopandas as gpd
 import pandas as pd
 import numpy as np
 
-path='C:/Users/Yijun Ma/Desktop/D/DOCUMENT/DCP2020/DCAS/'
+#path='C:/Users/Yijun Ma/Desktop/D/DOCUMENT/DCP2020/DCAS/'
 path='/home/mayijun/DCAS/'
 
 osm=gpd.read_file(path+'UBER/osm.geojson')
@@ -21,11 +21,8 @@ osm.to_file(path+'SHP/osm.shp')
 print('tract')
 
 osm=gpd.read_file(path+'SHP/osm.shp')
-nta=gpd.read_file(path+'SHP/nta.shp')
-nta.crs={'init':'epsg:4326'}
-nta=nta[['NTACode','geometry']].reset_index(drop=True)
-nta.columns=['nta','geometry']
-osm=gpd.sjoin(osm,nta,how='inner',op='intersects')
+nta=pd.read_csv(path+'SHP/tracttonta.csv',dtype=str)
+osm=pd.merge(osm,nta,how='left',on='tract')
 osm=osm[['wayid','startnode','endnode','highway','length','tract','nta','geometry']].reset_index(drop=True)
 osm.to_file(path+'SHP/osm.shp')
 print('nta')
@@ -79,7 +76,7 @@ print('council')
 #dcas=dcas[dcas['hod']==8].reset_index(drop=True)
 
 
-
+dropdupliates
 
 
 #dcas['avgspeedlength']=dcas['avgspeed']*dcas['length']
