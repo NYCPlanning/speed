@@ -253,6 +253,7 @@ dcascouncil17.to_file(path+'OUTPUT/dcascouncil17.shp')
 
 
 
+# Facilities
 facilitybbl=pd.read_csv(path+'FACILITY/FacilityBBL.csv',dtype=str)
 facilitybbl['BBL']=pd.to_numeric(facilitybbl['BBL'])
 
