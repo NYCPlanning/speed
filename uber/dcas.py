@@ -258,7 +258,7 @@ path='/home/mayijun/DCAS/'
 #facilitybbl['BBL']=pd.to_numeric(facilitybbl['BBL'])
 
 mappluto=gpd.read_file(path+'FACILITY/nyc_mappluto_20v1_shp/MapPLUTO.shp')
-mappluto=mappluto.o_crs({'init':'epsg:4326'})
+mappluto=mappluto.to_crs({'init':'epsg:4326'})
 mappluto=mappluto[['BBL','Latitude','Longitude','geometry']].reset_index(drop=True)
 mappluto.to_file(path+'FACILITY/mappluto.shp')
 
