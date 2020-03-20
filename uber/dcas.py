@@ -253,91 +253,91 @@ path='/home/mayijun/DCAS/'
 
 
 
-# Facilities
-# Clean MapPLUTO 2020 and create Borough-Block shapefile
-mappluto2020=gpd.read_file(path+'FACILITY/nyc_mappluto_20v1_shp/MapPLUTO.shp')
-mappluto2020=mappluto2020.to_crs({'init':'epsg:4326'})
-mappluto2020=mappluto2020[['BBL','Latitude','Longitude','geometry']].reset_index(drop=True)
-mappluto2020.to_file(path+'FACILITY/mappluto2020.shp')
-
-mappluto2020BB=gpd.read_file(path+'FACILITY/mappluto2020.shp')
-mappluto2020BB['BB']=[str(x)[0:6] for x in mappluto2020BB['BBL']]
-mappluto2020BB=mappluto2020BB.dissolve(by='BB')
-mappluto2020BB['Latitude']=mappluto2020BB.geometry.centroid.y
-mappluto2020BB['Longitude']=mappluto2020BB.geometry.centroid.x
-mappluto2020BB.to_file(path+'FACILITY/mappluto2020BB.shp')
-
-# Clean MapPLUTO 2015
-mappluto2015bx=gpd.read_file(path+'FACILITY/mappluto_15v1/Bronx/BXMapPLUTO.shp')
-mappluto2015bx=mappluto2015bx[['BBL','XCoord','YCoord','geometry']].reset_index(drop=True)
-mappluto2015bxpt=gpd.GeoDataFrame(mappluto2015bx,geometry=[shapely.geometry.Point(x, y) for x, y in zip(mappluto2015bx['XCoord'],mappluto2015bx['YCoord'])],crs=mappluto2015bx.crs)
-mappluto2015bxpt=mappluto2015bxpt.to_crs({'init':'epsg:4326'})
-mappluto2015bxpt['Latitude']=mappluto2015bxpt.geometry.y
-mappluto2015bxpt['Longitude']=mappluto2015bxpt.geometry.x
-mappluto2015bxpt=mappluto2015bxpt[['BBL','Latitude','Longitude']].reset_index(drop=True)
-mappluto2015bx=pd.merge(mappluto2015bx,mappluto2015bxpt,how='left',on='BBL')
-mappluto2015bx=mappluto2015bx[['BBL','Latitude','Longitude','geometry']].reset_index(drop=True)
-mappluto2015bx=mappluto2015bx.to_crs({'init':'epsg:4326'})
-
-mappluto2015bk=gpd.read_file(path+'FACILITY/mappluto_15v1/Brooklyn/BKMapPLUTO.shp')
-mappluto2015bk=mappluto2015bk[['BBL','XCoord','YCoord','geometry']].reset_index(drop=True)
-mappluto2015bkpt=gpd.GeoDataFrame(mappluto2015bk,geometry=[shapely.geometry.Point(x, y) for x, y in zip(mappluto2015bk['XCoord'],mappluto2015bk['YCoord'])],crs=mappluto2015bk.crs)
-mappluto2015bkpt=mappluto2015bkpt.to_crs({'init':'epsg:4326'})
-mappluto2015bkpt['Latitude']=mappluto2015bkpt.geometry.y
-mappluto2015bkpt['Longitude']=mappluto2015bkpt.geometry.x
-mappluto2015bkpt=mappluto2015bkpt[['BBL','Latitude','Longitude']].reset_index(drop=True)
-mappluto2015bk=pd.merge(mappluto2015bk,mappluto2015bkpt,how='left',on='BBL')
-mappluto2015bk=mappluto2015bk[['BBL','Latitude','Longitude','geometry']].reset_index(drop=True)
-mappluto2015bk=mappluto2015bk.to_crs({'init':'epsg:4326'})
-
-mappluto2015mn=gpd.read_file(path+'FACILITY/mappluto_15v1/Manhattan/MNMapPLUTO.shp')
-mappluto2015mn=mappluto2015mn[['BBL','XCoord','YCoord','geometry']].reset_index(drop=True)
-mappluto2015mnpt=gpd.GeoDataFrame(mappluto2015mn,geometry=[shapely.geometry.Point(x, y) for x, y in zip(mappluto2015mn['XCoord'],mappluto2015mn['YCoord'])],crs=mappluto2015mn.crs)
-mappluto2015mnpt=mappluto2015mnpt.to_crs({'init':'epsg:4326'})
-mappluto2015mnpt['Latitude']=mappluto2015mnpt.geometry.y
-mappluto2015mnpt['Longitude']=mappluto2015mnpt.geometry.x
-mappluto2015mnpt=mappluto2015mnpt[['BBL','Latitude','Longitude']].reset_index(drop=True)
-mappluto2015mn=pd.merge(mappluto2015mn,mappluto2015mnpt,how='left',on='BBL')
-mappluto2015mn=mappluto2015mn[['BBL','Latitude','Longitude','geometry']].reset_index(drop=True)
-mappluto2015mn=mappluto2015mn.to_crs({'init':'epsg:4326'})
-
-mappluto2015qn=gpd.read_file(path+'FACILITY/mappluto_15v1/Queens/QNMapPLUTO.shp')
-mappluto2015qn=mappluto2015qn[['BBL','XCoord','YCoord','geometry']].reset_index(drop=True)
-mappluto2015qnpt=gpd.GeoDataFrame(mappluto2015qn,geometry=[shapely.geometry.Point(x, y) for x, y in zip(mappluto2015qn['XCoord'],mappluto2015qn['YCoord'])],crs=mappluto2015qn.crs)
-mappluto2015qnpt=mappluto2015qnpt.to_crs({'init':'epsg:4326'})
-mappluto2015qnpt['Latitude']=mappluto2015qnpt.geometry.y
-mappluto2015qnpt['Longitude']=mappluto2015qnpt.geometry.x
-mappluto2015qnpt=mappluto2015qnpt[['BBL','Latitude','Longitude']].reset_index(drop=True)
-mappluto2015qn=pd.merge(mappluto2015qn,mappluto2015qnpt,how='left',on='BBL')
-mappluto2015qn=mappluto2015qn[['BBL','Latitude','Longitude','geometry']].reset_index(drop=True)
-mappluto2015qn=mappluto2015qn.to_crs({'init':'epsg:4326'})
-
-mappluto2015si=gpd.read_file(path+'FACILITY/mappluto_15v1/Staten_Island/SIMapPLUTO.shp')
-mappluto2015si=mappluto2015si[['BBL','XCoord','YCoord','geometry']].reset_index(drop=True)
-mappluto2015sipt=gpd.GeoDataFrame(mappluto2015si,geometry=[shapely.geometry.Point(x, y) for x, y in zip(mappluto2015si['XCoord'],mappluto2015si['YCoord'])],crs=mappluto2015si.crs)
-mappluto2015sipt=mappluto2015sipt.to_crs({'init':'epsg:4326'})
-mappluto2015sipt['Latitude']=mappluto2015sipt.geometry.y
-mappluto2015sipt['Longitude']=mappluto2015sipt.geometry.x
-mappluto2015sipt=mappluto2015sipt[['BBL','Latitude','Longitude']].reset_index(drop=True)
-mappluto2015si=pd.merge(mappluto2015si,mappluto2015sipt,how='left',on='BBL')
-mappluto2015si=mappluto2015si[['BBL','Latitude','Longitude','geometry']].reset_index(drop=True)
-mappluto2015si=mappluto2015si.to_crs({'init':'epsg:4326'})
-
-mappluto2015=pd.concat([mappluto2015bx,mappluto2015bk,mappluto2015mn,mappluto2015qn,mappluto2015si],axis=0,ignore_index=True)
-mappluto2015.to_file(path+'FACILITY/mappluto2015.shp')
-
-## Join to facilitybbl
-#facilitybbl=pd.read_csv(path+'FACILITY/FacilityBBL.csv',dtype=str,converters={'BBL':float})
-#mappluto2020=gpd.read_file(path+'FACILITY/mappluto2020.shp')
-#mappluto2020.crs={'init':'epsg:4326'}
+## Facilities
+## Clean MapPLUTO 2020 and create Borough-Block shapefile
+#mappluto2020=gpd.read_file(path+'FACILITY/nyc_mappluto_20v1_shp/MapPLUTO.shp')
+#mappluto2020=mappluto2020.to_crs({'init':'epsg:4326'})
+#mappluto2020=mappluto2020[['BBL','Latitude','Longitude','geometry']].reset_index(drop=True)
+#mappluto2020.to_file(path+'FACILITY/mappluto2020.shp')
 #
+#mappluto2020BB=gpd.read_file(path+'FACILITY/mappluto2020.shp')
+#mappluto2020BB['BB']=[str(x)[0:6] for x in mappluto2020BB['BBL']]
+#mappluto2020BB=mappluto2020BB.dissolve(by='BB')
+#mappluto2020BB['Latitude']=mappluto2020BB.geometry.centroid.y
+#mappluto2020BB['Longitude']=mappluto2020BB.geometry.centroid.x
+#mappluto2020BB.to_file(path+'FACILITY/mappluto2020BB.shp')
 #
-#facilitybbl=pd.merge(mappluto2020,facilitybbl,how='right',on='BBL')
+## Clean MapPLUTO 2015
+#mappluto2015bx=gpd.read_file(path+'FACILITY/mappluto_15v1/Bronx/BXMapPLUTO.shp')
+#mappluto2015bx=mappluto2015bx[['BBL','XCoord','YCoord','geometry']].reset_index(drop=True)
+#mappluto2015bxpt=gpd.GeoDataFrame(mappluto2015bx,geometry=[shapely.geometry.Point(x, y) for x, y in zip(mappluto2015bx['XCoord'],mappluto2015bx['YCoord'])],crs=mappluto2015bx.crs)
+#mappluto2015bxpt=mappluto2015bxpt.to_crs({'init':'epsg:4326'})
+#mappluto2015bxpt['Latitude']=mappluto2015bxpt.geometry.y
+#mappluto2015bxpt['Longitude']=mappluto2015bxpt.geometry.x
+#mappluto2015bxpt=mappluto2015bxpt[['BBL','Latitude','Longitude']].reset_index(drop=True)
+#mappluto2015bx=pd.merge(mappluto2015bx,mappluto2015bxpt,how='left',on='BBL')
+#mappluto2015bx=mappluto2015bx[['BBL','Latitude','Longitude','geometry']].reset_index(drop=True)
+#mappluto2015bx=mappluto2015bx.to_crs({'init':'epsg:4326'})
 #
+#mappluto2015bk=gpd.read_file(path+'FACILITY/mappluto_15v1/Brooklyn/BKMapPLUTO.shp')
+#mappluto2015bk=mappluto2015bk[['BBL','XCoord','YCoord','geometry']].reset_index(drop=True)
+#mappluto2015bkpt=gpd.GeoDataFrame(mappluto2015bk,geometry=[shapely.geometry.Point(x, y) for x, y in zip(mappluto2015bk['XCoord'],mappluto2015bk['YCoord'])],crs=mappluto2015bk.crs)
+#mappluto2015bkpt=mappluto2015bkpt.to_crs({'init':'epsg:4326'})
+#mappluto2015bkpt['Latitude']=mappluto2015bkpt.geometry.y
+#mappluto2015bkpt['Longitude']=mappluto2015bkpt.geometry.x
+#mappluto2015bkpt=mappluto2015bkpt[['BBL','Latitude','Longitude']].reset_index(drop=True)
+#mappluto2015bk=pd.merge(mappluto2015bk,mappluto2015bkpt,how='left',on='BBL')
+#mappluto2015bk=mappluto2015bk[['BBL','Latitude','Longitude','geometry']].reset_index(drop=True)
+#mappluto2015bk=mappluto2015bk.to_crs({'init':'epsg:4326'})
 #
-#k=facilitybbl[pd.isna(facilitybbl['geometry'])]
-#mappluto2015=gpd.read_file(path+'FACILITY/mapplut02015.shp')
-#mappluto2015.crs={'init':'epsg:4326'}
-#k=pd.merge(mappluto2015,k,how='right',on='BBL')
-#k['BBL']=[str(x) for x in k['BBL']]
+#mappluto2015mn=gpd.read_file(path+'FACILITY/mappluto_15v1/Manhattan/MNMapPLUTO.shp')
+#mappluto2015mn=mappluto2015mn[['BBL','XCoord','YCoord','geometry']].reset_index(drop=True)
+#mappluto2015mnpt=gpd.GeoDataFrame(mappluto2015mn,geometry=[shapely.geometry.Point(x, y) for x, y in zip(mappluto2015mn['XCoord'],mappluto2015mn['YCoord'])],crs=mappluto2015mn.crs)
+#mappluto2015mnpt=mappluto2015mnpt.to_crs({'init':'epsg:4326'})
+#mappluto2015mnpt['Latitude']=mappluto2015mnpt.geometry.y
+#mappluto2015mnpt['Longitude']=mappluto2015mnpt.geometry.x
+#mappluto2015mnpt=mappluto2015mnpt[['BBL','Latitude','Longitude']].reset_index(drop=True)
+#mappluto2015mn=pd.merge(mappluto2015mn,mappluto2015mnpt,how='left',on='BBL')
+#mappluto2015mn=mappluto2015mn[['BBL','Latitude','Longitude','geometry']].reset_index(drop=True)
+#mappluto2015mn=mappluto2015mn.to_crs({'init':'epsg:4326'})
+#
+#mappluto2015qn=gpd.read_file(path+'FACILITY/mappluto_15v1/Queens/QNMapPLUTO.shp')
+#mappluto2015qn=mappluto2015qn[['BBL','XCoord','YCoord','geometry']].reset_index(drop=True)
+#mappluto2015qnpt=gpd.GeoDataFrame(mappluto2015qn,geometry=[shapely.geometry.Point(x, y) for x, y in zip(mappluto2015qn['XCoord'],mappluto2015qn['YCoord'])],crs=mappluto2015qn.crs)
+#mappluto2015qnpt=mappluto2015qnpt.to_crs({'init':'epsg:4326'})
+#mappluto2015qnpt['Latitude']=mappluto2015qnpt.geometry.y
+#mappluto2015qnpt['Longitude']=mappluto2015qnpt.geometry.x
+#mappluto2015qnpt=mappluto2015qnpt[['BBL','Latitude','Longitude']].reset_index(drop=True)
+#mappluto2015qn=pd.merge(mappluto2015qn,mappluto2015qnpt,how='left',on='BBL')
+#mappluto2015qn=mappluto2015qn[['BBL','Latitude','Longitude','geometry']].reset_index(drop=True)
+#mappluto2015qn=mappluto2015qn.to_crs({'init':'epsg:4326'})
+#
+#mappluto2015si=gpd.read_file(path+'FACILITY/mappluto_15v1/Staten_Island/SIMapPLUTO.shp')
+#mappluto2015si=mappluto2015si[['BBL','XCoord','YCoord','geometry']].reset_index(drop=True)
+#mappluto2015sipt=gpd.GeoDataFrame(mappluto2015si,geometry=[shapely.geometry.Point(x, y) for x, y in zip(mappluto2015si['XCoord'],mappluto2015si['YCoord'])],crs=mappluto2015si.crs)
+#mappluto2015sipt=mappluto2015sipt.to_crs({'init':'epsg:4326'})
+#mappluto2015sipt['Latitude']=mappluto2015sipt.geometry.y
+#mappluto2015sipt['Longitude']=mappluto2015sipt.geometry.x
+#mappluto2015sipt=mappluto2015sipt[['BBL','Latitude','Longitude']].reset_index(drop=True)
+#mappluto2015si=pd.merge(mappluto2015si,mappluto2015sipt,how='left',on='BBL')
+#mappluto2015si=mappluto2015si[['BBL','Latitude','Longitude','geometry']].reset_index(drop=True)
+#mappluto2015si=mappluto2015si.to_crs({'init':'epsg:4326'})
+#
+#mappluto2015=pd.concat([mappluto2015bx,mappluto2015bk,mappluto2015mn,mappluto2015qn,mappluto2015si],axis=0,ignore_index=True)
+#mappluto2015.to_file(path+'FACILITY/mappluto2015.shp')
+
+# Join to facilitybbl
+facilitybbl=pd.read_csv(path+'FACILITY/FacilityBBL.csv',dtype=str,converters={'BBL':float})
+mappluto2020=gpd.read_file(path+'FACILITY/mappluto2020.shp')
+mappluto2020.crs={'init':'epsg:4326'}
+
+
+facilitybbl=pd.merge(mappluto2020,facilitybbl,how='right',on='BBL')
+
+
+k=facilitybbl[pd.isna(facilitybbl['geometry'])]
+mappluto2015=gpd.read_file(path+'FACILITY/mapplut02015.shp')
+mappluto2015.crs={'init':'epsg:4326'}
+k=pd.merge(mappluto2015,k,how='right',on='BBL')
+k['BBL']=[str(x) for x in k['BBL']]
 
