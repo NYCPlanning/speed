@@ -4,8 +4,8 @@ import numpy as np
 import shapely
 
 
-#path='C:/Users/Yijun Ma/Desktop/D/DOCUMENT/DCP2020/DCAS/'
-path='/home/mayijun/DCAS/'
+path='C:/Users/Yijun Ma/Desktop/D/DOCUMENT/DCP2020/DCAS/'
+#path='/home/mayijun/DCAS/'
 
 
 
