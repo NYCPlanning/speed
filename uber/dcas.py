@@ -254,11 +254,14 @@ path='/home/mayijun/DCAS/'
 
 
 # Facilities
-#facilitybbl=pd.read_csv(path+'FACILITY/FacilityBBL.csv',dtype=str)
-#facilitybbl['BBL']=pd.to_numeric(facilitybbl['BBL'])
-
 mappluto=gpd.read_file(path+'FACILITY/nyc_mappluto_20v1_shp/MapPLUTO.shp')
 mappluto=mappluto.to_crs({'init':'epsg:4326'})
-mappluto=mappluto[['BBL','Latitude','Longitude','geometry']].reset_index(drop=True)
+mappluto=mappluto[['BBL','APPBBL','Latitude','Longitude','geometry']].reset_index(drop=True)
 mappluto.to_file(path+'FACILITY/mappluto.shp')
+
+
+#facilitybbl=pd.read_csv(path+'FACILITY/FacilityBBL.csv',dtype=str,converters={'BBL':float})
+#mappluto=gpd.read_file(path+'FACILITY/mappluto.shp')
+#mappluto.crs={'init':'epsg:4326'}
+#facilitybbl=pd.merge(mappluto,facilitybbl,how='right',on='BBL')
 
