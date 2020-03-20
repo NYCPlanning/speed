@@ -4,8 +4,8 @@ import numpy as np
 import shapely
 
 
-#path='C:/Users/Yijun Ma/Desktop/D/DOCUMENT/DCP2020/DCAS/'
-path='/home/mayijun/DCAS/'
+path='C:/Users/Yijun Ma/Desktop/D/DOCUMENT/DCP2020/DCAS/'
+#path='/home/mayijun/DCAS/'
 
 
 
@@ -317,16 +317,18 @@ path='/home/mayijun/DCAS/'
 #mappluto2015si=mappluto2015si.to_crs({'init':'epsg:4326'})
 #
 #mappluto2015=pd.concat([mappluto2015bx,mappluto2015bk,mappluto2015mn,mappluto2015qn,mappluto2015si],axis=0,ignore_index=True)
-#mappluto2015.to_file(path+'FACILITY/mapplut2015.shp')
+#mappluto2015.to_file(path+'FACILITY/mappluto2015.shp')
 
-
-
+# Join to facilitybbl
 facilitybbl=pd.read_csv(path+'FACILITY/FacilityBBL.csv',dtype=str,converters={'BBL':float})
 mappluto2020=gpd.read_file(path+'FACILITY/mappluto2020.shp')
 mappluto2020.crs={'init':'epsg:4326'}
 facilitybbl=pd.merge(mappluto2020,facilitybbl,how='right',on='BBL')
 
+
 k=facilitybbl[pd.isna(facilitybbl['geometry'])]
-k=pd.merge(mappluto2020,k,how='right',left_on='APPBBL',right_on='BBL')
+mappluto2015=gpd.read_file(path+'FACILITY/mapplut02015.shp')
+mappluto2015.crs={'init':'epsg:4326'}
+k=pd.merge(mappluto2015,k,how='right',on='BBL')
 
 
