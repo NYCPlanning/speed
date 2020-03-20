@@ -265,6 +265,8 @@ mappluto2020BB['BB']=[str(x)[1:6] for x in mappluto2020BB['BBL']]
 mappluto2020BB=mappluto2020BB.dissolve(by='BB')
 mappluto2020BB.to_file(path+'FACILITY/mappluto2020BB.shp')
 
+mappluto2020BB=gpd.read_file(path+'FACILITY/mappluto2020BB.shp')
+
 
 ## Clean MapPLUTO 2015
 #mappluto2015bx=gpd.read_file(path+'FACILITY/mappluto_15v1/Bronx/BXMapPLUTO.shp')
